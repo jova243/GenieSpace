@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenieSpace - Réseau L2 Génie Informatique</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        🚀 GenieSpace ⚙️
+    </header>
+
+    <div class="container">
+        
+        <div class="tabs">
+            <button id="loginTab" class="active" onclick="showTab('login')">
+                <i class="fas fa-sign-in-alt"></i> Connexion
+            </button>
+            <button id="registerTab" onclick="showTab('register')">
+                <i class="fas fa-user-plus"></i> Inscription
+            </button>
+        </div>
+
+        
+        <form id="loginForm">
+            <h3 class="form-title">
+                <i class="fas fa-rocket"></i> Accédez à GenieSpace
+            </h3>
+            <input type="text" id="loginUsername" placeholder="👤 Nom d'utilisateur" required>
+            <input type="password" id="loginPassword" placeholder="🔒 Mot de passe" required>
+           
+            <button type="button" onclick="login()">
+                <i class="fas fa-sign-in-alt"></i> Décoller vers GenieSpace
+            </button>
+        </form>
+
+        
+        <form id="registerForm" class="hidden">
+            <h3 class="form-title">
+                <i class="fas fa-user-astronaut"></i> Rejoignez GenieSpace
+            </h3>
+            <input type="text" id="regUsername" placeholder="👤 Entrez votre nom+prénom " required>
+            <input type="password" id="regPassword" placeholder="🔒 Mot de passe sécurisé" required   >
+            
+            <input type="text" id="studentNumber" placeholder="🎓 Numéro étudiant (7 chiffres)" required>
+            <input type="email" id="email" placeholder="📧 Email universitaire" required>
+            <select id="filiere" required>
+                <option value="">🎯 Sélectionner votre orbite académique</option>
+                <option value="L2 Genie Informatique">🚀 L2 Génie Informatique</option>
+                <option value="Autre">⭐ Autre formation</option>
+            </select>
+            <label class="file-label">
+                <i class="fas fa-camera"></i> Photo de profil (obligatoire):
+                <input type="file" id="regProfilePic" accept="image/*" required>
+            </label>
+            <button type="button" onclick="register()">
+                <i class="fas fa-rocket"></i> S'inscrire sur GenieSpace
+            </button>
+            <p class="form-info">
+                <i class="fas fa-info-circle"></i> Réservé aux étudiants de Génie Informatique
+            </p>
+        </form>
+        
+
+        
+        <div id="feed" class="hidden">
+            
+            <div class="feed-header">
+                <div>
+                    <h2 id="welcome">
+                        <i class="fas fa-user-astronaut"></i> Bienvenue, <span id="usernameDisplay"></span> !
+                        <span class="geniespace-badge">GenieSpace 🚀</span>
+                    </h2>
+                    <p class="user-status">
+                        <i class="fas fa-satellite"></i> Connecté sur GenieSpace
+                    </p>
+                </div>
+                <button onclick="logout()" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Quitter l'orbite
+                </button>
+            </div>
+
+            
+            <input type="text" id="searchInput" class="search-bar" placeholder="🔍 Rechercher un étudiant, un post, un code..." oninput="filterPosts()">
+
+            
+            <div class="post-creation">
+                <h3>
+                    <i class="fas fa-pencil-alt"></i> Nouveau message spatial
+                </h3>
+                <textarea id="postText" placeholder="💡 Partagez une idée, du code, une question... (Markdown supporté)" rows="3"></textarea>
+                <div class="post-options">
+                    <input type="file" id="postImage" accept="image/*">
+                    <select id="postType">
+                        <option value="general">📝 Général</option>
+                        <option value="code">💻 Code</option>
+                        <option value="question">❓ Question</option>
+                        <option value="project">🚀 Projet</option>
+                        <option value="resource">📚 Ressource</option>
+                    </select>
+                    <button onclick="createPost()" class="publish-btn">
+                        <i class="fas fa-paper-plane"></i> Publier dans l'espace
+                    </button>
+                </div>
+            </div>
+
+            
+            <h3 class="section-title">
+                <i class="fas fa-broadcast-tower"></i> Activité récente du site 
+            </h3>
+            <div id="posts"></div>
+
+            
+            <div class="pagination">
+                <button onclick="prevPage()" id="prevBtn">
+                    <i class="fas fa-chevron-left"></i> Précédent
+                </button>
+                <span id="pageInfo">Orbite 1</span>
+                <button onclick="nextPage()" id="nextBtn">
+                    Suivant <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
+            
+            <div id="coursesSection">
+                <h3 class="section-title">
+                    <i class="fas fa-graduation-cap"></i> Mes Cours L2 Génie Info
+                </h3>
+                <button onclick="toggleCourses()" id="toggleCoursesBtn" class="courses-toggle">
+                    <i class="fas fa-book-open"></i> Voir tous les cours
+                </button>
+                <div id="coursesList" class="hidden courses-grid"></div>
+                
+                <div id="courseDetail" class="hidden course-detail">
+                    <div class="course-detail-header">
+                        <h3 id="courseTitle"></h3>
+                        <button onclick="closeCourseDetail()" class="close-btn">
+                            <i class="fas fa-times"></i> Fermer
+                        </button>
+                    </div>
+                    <div id="courseContent" class="course-content"></div>
+                    <div class="course-resources">
+                        <h4><i class="fas fa-tools"></i> Ressources utiles</h4>
+                        <div id="resourcesList" class="resources-grid"></div>
+                    </div>
+                </div>
+            </div>
+
+            
+            <h3 class="section-title">
+                <i class="fas fa-satellite-dish"></i> Communication spatiale
+            </h3>
+            <div class="chat-container">
+                <div class="users-list" id="usersList">
+                    <div class="users-list-header">
+                        <i class="fas fa-users"></i>
+                        <div>Connectez-vous aux autres ingénieurs</div>
+                    </div>
+                </div>
+                <div class="chat-box">
+                    <div id="chatHeader" class="chat-header">
+                        <i class="fas fa-comments"></i> <span>Sélectionnez un contact</span>
+                    </div>
+                    <div class="messages" id="messages"></div>
+                    <div class="chat-input">
+                        <input type="text" id="chatMessage" placeholder="📡 Envoyer un message..." onkeypress="handleChatKeyPress(event)">
+                        <button onclick="sendMessage()" class="send-btn">
+                            <i class="fas fa-paper-plane"></i> Transmettre
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div id="callSection" style="display:none;">
+                <div class="call-controls">
+                    <button onclick="startAudioCall()" class="call-btn audio-call">
+                        <i class="fas fa-phone"></i> Appel Audio
+                    </button>
+                    <button onclick="startVideoCall()" class="call-btn video-call">
+                        <i class="fas fa-video"></i> Appel Vidéo
+                    </button>
+                    <button onclick="startScreenShare()" class="call-btn screen-share">
+                        <i class="fas fa-desktop"></i> Partager Écran
+                    </button>
+                </div>
+
+                
+                <div id="callWindow" class="hidden call-window">
+                    <div class="call-header">
+                        <h4><i class="fas fa-phone"></i> Appel en cours</h4>
+                        <button onclick="endCall()" class="end-call-btn">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div id="callInfo" class="call-info"></div>
+                    <div class="video-container">
+                        <video id="localVideo" autoplay muted></video>
+                        <video id="remoteVideo" autoplay></video>
+                        <div class="call-controls-bottom">
+                            <button onclick="toggleMute()" id="muteBtn" class="call-control-btn">
+                                <i class="fas fa-microphone"></i> Muet
+                            </button>
+                            <button onclick="toggleVideo()" id="videoBtn" class="call-control-btn">
+                                <i class="fas fa-video"></i> Cam
+                            </button>
+                            <button onclick="endCall()" class="call-control-btn hangup-btn">
+                                <i class="fas fa-phone-slash"></i> Raccrocher
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="incomingCall" class="hidden incoming-call">
+                    <h3><i class="fas fa-phone-volume"></i> Appel Entrant</h3>
+                    <p><span id="callerName"></span> vous appelle</p>
+                    <div class="call-actions">
+                        <button onclick="acceptCall()" class="accept-call-btn">
+                            <i class="fas fa-phone"></i> Répondre
+                        </button>
+                        <button onclick="rejectCall()" class="reject-call-btn">
+                            <i class="fas fa-phone-slash"></i> Refuser
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>&copy2026:jovanimbombo00@gmail.com</footer>
+
+    
+    <script src="script.js"></script>
+</body>
+</html>
