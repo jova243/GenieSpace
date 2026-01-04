@@ -9,7 +9,7 @@
 </head>
 <body>
     <header>
-        🚀 GenieSpace ⚙️
+        GenieSpace 
     </header>
 
     <div class="container">
@@ -46,11 +46,6 @@
             
             <input type="text" id="studentNumber" placeholder="🎓 Numéro étudiant (7 chiffres)" required>
             <input type="email" id="email" placeholder="📧 Email universitaire" required>
-            <select id="filiere" required>
-                <option value="">🎯 Sélectionner votre orbite académique</option>
-                <option value="L2 Genie Informatique">🚀 L2 Génie Informatique</option>
-                <option value="Autre">⭐ Autre formation</option>
-            </select>
             <label class="file-label">
                 <i class="fas fa-camera"></i> Photo de profil (obligatoire):
                 <input type="file" id="regProfilePic" accept="image/*" required>
@@ -71,7 +66,7 @@
                 <div>
                     <h2 id="welcome">
                         <i class="fas fa-user-astronaut"></i> Bienvenue, <span id="usernameDisplay"></span> !
-                        <span class="geniespace-badge">GenieSpace 🚀</span>
+                        <span class="geniespace-badge">GenieSpace</span>
                     </h2>
                     <p class="user-status">
                         <i class="fas fa-satellite"></i> Connecté sur GenieSpace
@@ -90,15 +85,15 @@
                 <h3>
                     <i class="fas fa-pencil-alt"></i> Nouveau message spatial
                 </h3>
-                <textarea id="postText" placeholder="💡 Partagez une idée, du code, une question... (Markdown supporté)" rows="3"></textarea>
+                <textarea id="postText" placeholder=" Partagez une idée, du code, une question... (Markdown supporté)" rows="3"></textarea>
                 <div class="post-options">
                     <input type="file" id="postImage" accept="image/*">
                     <select id="postType">
-                        <option value="general">📝 Général</option>
-                        <option value="code">💻 Code</option>
-                        <option value="question">❓ Question</option>
-                        <option value="project">🚀 Projet</option>
-                        <option value="resource">📚 Ressource</option>
+                        <option value="general"> Général</option>
+                        <option value="code"> Code</option>
+                        <option value="question"> Question</option>
+                        <option value="project"> Projet</option>
+                        <option value="resource"> Ressource</option>
                     </select>
                     <button onclick="createPost()" class="publish-btn">
                         <i class="fas fa-paper-plane"></i> Publier dans l'espace
@@ -165,7 +160,7 @@
                     </div>
                     <div class="messages" id="messages"></div>
                     <div class="chat-input">
-                        <input type="text" id="chatMessage" placeholder="📡 Envoyer un message..." onkeypress="handleChatKeyPress(event)">
+                        <input type="text" id="chatMessage" placeholder=" Envoyer un message..." onkeypress="handleChatKeyPress(event)">
                         <button onclick="sendMessage()" class="send-btn">
                             <i class="fas fa-paper-plane"></i> Transmettre
                         </button>
@@ -234,4 +229,5 @@
     
     <script src="script.js"></script>
 </body>
+
 </html>
